@@ -11,12 +11,16 @@ export class HomePage {
     readonly homeBanner: Locator;
     readonly yourFeedBtn: Locator;
     readonly globalFeedBtn: Locator;
+    readonly bondarAcademyLink: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this.homeBanner = page.getByRole('heading', { name: 'conduit' });
         this.yourFeedBtn = page.getByText('Your Feed');
         this.globalFeedBtn = page.getByText('Global Feed');
+        this.bondarAcademyLink = page.getByRole('link', {
+            name: 'www.bondaracademy.com',
+        });
     }
 
     /**
