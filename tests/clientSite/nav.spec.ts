@@ -1,6 +1,8 @@
 import { test, expect } from '../../fixtures/pom/test-options';
 
 test.describe('Verify Home Page', () => {
+    test.use({ storageState: '.auth/guestSession.json' });
+
     test.beforeEach(async ({ homePage }) => {
         await homePage.navigateToHomePageGuest();
     });

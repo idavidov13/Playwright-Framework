@@ -1,6 +1,8 @@
 import { test, expect } from '../../fixtures/pom/test-options';
 
 test.describe('Verify Home Page And Bondar Academy Website', () => {
+    test.use({ storageState: '.auth/guestSession.json' });
+
     test(
         'Verify Successful Loading of Home Page',
         { tag: '@Smoke' },

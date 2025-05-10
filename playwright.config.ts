@@ -53,18 +53,6 @@ export default defineConfig({
         },
 
         {
-            name: 'guest',
-            use: {
-                ...devices['Desktop Chrome'],
-                viewport: { width: 1366, height: 768 },
-            },
-            testMatch: [
-                '**/clientSite/home.spec.ts',
-                '**/clientSite/nav.spec.ts',
-            ],
-        },
-
-        {
             name: 'chromium',
             use: {
                 ...devices['Desktop Chrome'],
@@ -72,10 +60,6 @@ export default defineConfig({
                 viewport: { width: 1366, height: 768 },
             },
             dependencies: ['setup'],
-            testIgnore: [
-                '**/clientSite/home.spec.ts',
-                '**/clientSite/nav.spec.ts',
-            ],
         },
 
         {
