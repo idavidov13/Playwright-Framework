@@ -2,7 +2,7 @@ import { test, expect } from '../../fixtures/pom/test-options';
 
 test.describe('Verify Home Page', () => {
     test.beforeEach(async ({ homePage }) => {
-        await homePage.navigateToHomePage();
+        await homePage.navigateToHomePageGuest();
     });
 
     test(
@@ -22,7 +22,7 @@ test.describe('Verify Home Page', () => {
     test(
         'Verify Navigation from Navigation Bar',
         { tag: '@Sanity' },
-        async ({ homePage, navPage, page }) => {
+        async ({ navPage }) => {
             await test.step('Navigate to Sign In Page', async () => {
                 await navPage.navigateToSignInPage();
             });
