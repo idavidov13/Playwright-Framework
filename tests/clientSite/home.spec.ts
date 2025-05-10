@@ -5,7 +5,7 @@ test.describe('Verify Home Page And Bondar Academy Website', () => {
         'Verify Successful Loading of Home Page',
         { tag: '@Smoke' },
         async ({ homePage }) => {
-            await homePage.navigateToHomePage();
+            await homePage.navigateToHomePageGuest();
         }
     );
 
@@ -14,7 +14,7 @@ test.describe('Verify Home Page And Bondar Academy Website', () => {
         { tag: '@Regression' },
         async ({ homePage, context }) => {
             await test.step('Navigate to Home Page', async () => {
-                await homePage.navigateToHomePage();
+                await homePage.navigateToHomePageGuest();
             });
 
             await test.step('Verify Navigation to Bondar Academy Website', async () => {
