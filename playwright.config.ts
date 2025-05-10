@@ -37,13 +37,45 @@ export default defineConfig({
 
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         trace: 'on-first-retry',
+        screenshot: 'only-on-failure',
+        video: 'retain-on-failure',
     },
 
     /* Configure projects for major browsers */
     projects: [
         {
+            name: 'setup',
+            use: {
+                ...devices['Desktop Chrome'],
+                viewport: { width: 1366, height: 768 },
+            },
+            testMatch: /.*\.setup\.ts/,
+        },
+
+        {
+            name: 'guest',
+            use: {
+                ...devices['Desktop Chrome'],
+                viewport: { width: 1366, height: 768 },
+            },
+            testMatch: [
+                '**/clientSite/home.spec.ts',
+                '**/clientSite/nav.spec.ts',
+            ],
+        },
+
+        {
             name: 'chromium',
-            use: { ...devices['Desktop Chrome'] },
+            use: {
+                ...devices['Desktop Chrome'],
+                storageState: '.auth/userSession.json',
+                viewport: { width: 1366, height: 768 },
+            },
+            dependencies: ['setup'],
+            testIgnore: [
+                '**/clientSite/home.spec.ts',
+                '**/clientSite/nav.spec.ts',
+            ],
         },
 
         {

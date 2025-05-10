@@ -1,17 +1,30 @@
 {
-  "name": "playwright-framework",
-  "version": "1.0.0",
-  "description": "MVP for Playwright Automation Framework. Features TypeScript, Page Object Model Design Patter, Custom Fixtures, REST API Testing and Mocking, Schema Validation with Zod, Environment Utilization and CI/CD integration with GitHub Actions",
-  "main": "index.js",
-  "scripts": {},
-  "keywords": [],
-  "author": "Ivan Davidov",
-  "license": "ISC",
-  "devDependencies": {
-    "@playwright/test": "^1.52.0",
-    "@types/node": "^22.15.17"
-  },
-  "dependencies": {
-    "dotenv": "^16.5.0"
-  }
+    "name": "playwright-framework",
+    "version": "1.0.0",
+    "description": "MVP for Playwright Automation Framework. Features TypeScript, Page Object Model Design Patter, Custom Fixtures, REST API Testing and Mocking, Schema Validation with Zod, Environment Utilization and CI/CD integration with GitHub Actions",
+    "main": "index.js",
+    "scripts": {
+        "guest": "npx playwright test --project=guest",
+        "test": "npx playwright test --project=chromium",
+        "ci": "npx playwright test --project=chromium --workers=1",
+        "flaky": "npx playwright test --project=chromium --repeat-each=20",
+        "debug": "npx playwright test --project=chromium --debug",
+        "ui": "npx playwright test --project=chromium --ui",
+        "smoke": "npx playwright test --grep @Smoke --project=chromium",
+        "sanity": "npx playwright test --grep @Sanity --project=chromium",
+        "api": "npx playwright test --grep @Api --project=chromium",
+        "regression": "npx playwright test --grep @Regression --project=chromium",
+        "fullTest": "npx playwright test"
+    },
+    "keywords": [],
+    "author": "Ivan Davidov",
+    "license": "ISC",
+    "devDependencies": {
+        "@playwright/test": "^1.52.0",
+        "@types/node": "^22.15.17"
+    },
+    "dependencies": {
+        "dotenv": "^16.5.0",
+        "zod": "^3.24.4"
+    }
 }
