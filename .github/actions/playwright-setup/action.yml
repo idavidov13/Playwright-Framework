@@ -1,0 +1,40 @@
+name: 'Playwright Setup on Runner'
+description: 'Setup Playwright on Runner by getting the code, setup Node, getting and caching dependencies and getting and caching Playwright Browsers'
+inputs:
+    caching-dependencies:
+        description: 'Wheather to cache dependencies or not'
+        required: false
+        default: 'true'
+    caching-browsers:
+        description: 'Wheather to cache browsers or not'
+        required: false
+        default: 'true'
+runs:
+    using: 'composite'
+    steps:
+        - name: Setup Node
+          uses: actions/setup-node@v4
+          with:
+              node-version: lts/*
+        - name: Cache Dependencies
+          if: inputs.caching-dependencies == 'true'
+          id: cache-dependencies
+          uses: actions/cache@v4
+          with:
+              path: node_modules
+              key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+        - name: Install dependencies
+          if: steps.cache-dependencies.outputs.cache-hit != 'true' || inputs.caching-dependencies != 'true'
+          run: npm ci
+          shell: bash
+        - name: Cache Playwright Browsers
+          if: inputs.caching-browsers == 'true'
+          id: cache-browsers
+          uses: actions/cache@v4
+          with:
+              path: ~/.cache/ms-playwright
+              key: playwright-browsers-${{ runner.os }}
+        - name: Install Playwright Browsers
+          if: steps.cache-browsers.outputs.cache-hit != 'true' || inputs.caching-browsers != 'true'
+          run: npx playwright install --with-deps chromium
+          shell: bash

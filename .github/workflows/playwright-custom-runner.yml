@@ -1,0 +1,93 @@
+name: Playwright Tests on Custom Runner
+on:
+    push:
+        branches: [main, master]
+    pull_request:
+        branches: [main, master]
+    workflow_dispatch:
+env:
+    URL: ${{ secrets.URL }}
+    API_URL: ${{ secrets.API_URL }}
+    USER_NAME: ${{ secrets.USER_NAME }}
+    EMAIL: ${{ secrets.EMAIL }}
+    PASSWORD: ${{ secrets.PASSWORD }}
+jobs:
+    setup-and-smoke-test:
+        timeout-minutes: 60
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Playwright Setup on Runner
+              uses: ./.github/actions/playwright-setup
+            - name: Setup Environment Variables
+              run: echo "ENVIRONMENT=stage" >> $GITHUB_ENV
+            - name: Run Smoke tests
+              run: npm run smoke
+            - name: Upload Playwright Report
+              uses: actions/upload-artifact@v4
+              if: ${{ !cancelled() }}
+              with:
+                  name: Smoke test report-${{ github.run_id }}
+                  path: playwright-report/
+                  retention-days: 3
+    sanity-test:
+        needs: setup-and-smoke-test
+        timeout-minutes: 60
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Playwright Setup on Runner
+              uses: ./.github/actions/playwright-setup
+            - name: Setup Environment Variables
+              run: echo "ENVIRONMENT=stage" >> $GITHUB_ENV
+            - name: Run Sanity tests
+              run: npm run sanity
+            - name: Upload Playwright Report
+              uses: actions/upload-artifact@v4
+              if: ${{ !cancelled() }}
+              with:
+                  name: Sanity test report-${{ github.run_id }}
+                  path: playwright-report/
+                  retention-days: 3
+    api-test:
+        needs: setup-and-smoke-test
+        timeout-minutes: 60
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Playwright Setup on Runner
+              uses: ./.github/actions/playwright-setup
+            - name: Setup Environment Variables
+              run: echo "ENVIRONMENT=stage" >> $GITHUB_ENV
+            - name: Run API tests
+              run: npm run api
+            - name: Upload Playwright Report
+              uses: actions/upload-artifact@v4
+              if: ${{ !cancelled() }}
+              with:
+                  name: API test report-${{ github.run_id }}
+                  path: playwright-report/
+                  retention-days: 3
+    regression-test:
+        needs: setup-and-smoke-test
+        timeout-minutes: 60
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Playwright Setup on Runner
+              uses: ./.github/actions/playwright-setup
+            - name: Setup Environment Variables
+              run: echo "ENVIRONMENT=stage" >> $GITHUB_ENV
+            - name: Run Regression tests
+              run: npm run regression
+            - name: Upload Playwright Report
+              uses: actions/upload-artifact@v4
+              if: ${{ !cancelled() }}
+              with:
+                  name: Regression test report-${{ github.run_id }}
+                  path: playwright-report/
+                  retention-days: 3
