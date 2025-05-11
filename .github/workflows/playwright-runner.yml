@@ -36,8 +36,6 @@ jobs:
             - name: Install Playwright Browsers
               if: steps.playwright-cache.outputs.cache-hit != 'true'
               run: npx playwright install --with-deps chromium
-            - name: Setup Environment Variables
-              run: echo "ENVIRONMENT=stage" >> $GITHUB_ENV
             - name: Run Smoke tests
               run: npm run smoke
             - name: Upload Playwright Report
@@ -76,8 +74,6 @@ jobs:
             - name: Install Playwright Browsers
               if: steps.playwright-cache.outputs.cache-hit != 'true'
               run: npx playwright install --with-deps chromium
-            - name: Setup Environment Variables
-              run: echo "ENVIRONMENT=stage" >> $GITHUB_ENV
             - name: Run Sanity tests
               run: npm run sanity
             - name: Upload Playwright Report
@@ -116,8 +112,6 @@ jobs:
             - name: Install Playwright Browsers
               if: steps.playwright-cache.outputs.cache-hit != 'true'
               run: npx playwright install --with-deps chromium
-            - name: Setup Environment Variables
-              run: echo "ENVIRONMENT=stage" >> $GITHUB_ENV
             - name: Run API tests
               run: npm run api
             - name: Upload Playwright Report
@@ -156,8 +150,6 @@ jobs:
             - name: Install Playwright Browsers
               if: steps.playwright-cache.outputs.cache-hit != 'true'
               run: npx playwright install --with-deps chromium
-            - name: Setup Environment Variables
-              run: echo "ENVIRONMENT=stage" >> $GITHUB_ENV
             - name: Run Regression tests
               run: npm run regression
             - name: Upload Playwright Report
