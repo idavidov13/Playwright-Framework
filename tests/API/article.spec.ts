@@ -6,7 +6,7 @@ import articleData from '../../test-data/articleData.json';
 test.describe('Verify CRUD for Article', () => {
     test(
         'Verify Create/Read/Update/Delete an Article',
-        { tag: '@Sanity' },
+        { tag: '@Api' },
         async ({ apiRequest }) => {
             let articleId: string;
 
