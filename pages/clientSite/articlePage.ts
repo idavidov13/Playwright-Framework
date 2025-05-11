@@ -94,6 +94,18 @@ export class ArticlePage {
     ): Promise<void> {
         await this.editArticleButton.click();
 
+        await this.page.waitForResponse(
+            (response) =>
+                response.url().includes('/api/user') &&
+                response.request().method() === 'GET'
+        );
+
+        await this.page.waitForResponse(
+            (response) =>
+                response.url().includes('/api/articles/') &&
+                response.request().method() === 'GET'
+        );
+
         await this.articleTitleInput.fill(title);
         await this.articleDescriptionInput.fill(description);
         await this.articleBodyInput.fill(body);
