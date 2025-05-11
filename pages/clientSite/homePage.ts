@@ -12,6 +12,7 @@ export class HomePage {
     readonly yourFeedBtn: Locator;
     readonly globalFeedBtn: Locator;
     readonly bondarAcademyLink: Locator;
+    readonly noArticlesMessage: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -21,6 +22,7 @@ export class HomePage {
         this.bondarAcademyLink = page.getByRole('link', {
             name: 'www.bondaracademy.com',
         });
+        this.noArticlesMessage = page.getByText('No articles are here... yet.');
     }
 
     /**
