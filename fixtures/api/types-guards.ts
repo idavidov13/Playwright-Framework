@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { UserSchema } from './schemas';
+import type { UserSchema, ErrorResponseSchema } from './schemas';
 
 /**
  * Parameters for making an API request.
@@ -41,3 +41,4 @@ export type ApiRequestMethods = {
 };
 
 export type User = z.infer<typeof UserSchema>;
+export type ErrorResponse = z.infer<typeof ErrorResponseSchema>;

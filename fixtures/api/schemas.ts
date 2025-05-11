@@ -9,3 +9,11 @@ export const UserSchema = z.object({
         token: z.string(),
     }),
 });
+
+export const ErrorResponseSchema = z.object({
+    errors: z.object({
+        email: z.array(z.string()).optional(),
+        username: z.array(z.string()).optional(),
+        password: z.array(z.string()).optional(),
+    }),
+});
