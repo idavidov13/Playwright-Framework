@@ -30,8 +30,7 @@ test.describe('Verify Publish/Edit/Delete an Article', () => {
                 await articlePage.editArticle(
                     `Updated ${randomArticleTitle}`,
                     `Updated ${randomArticleDescription}`,
-                    `Updated ${randomArticleBody}`,
-                    `Updated ${randomArticleTag}`
+                    `Updated ${randomArticleBody}`
                 );
             });
 
