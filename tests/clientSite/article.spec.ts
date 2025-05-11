@@ -1,6 +1,12 @@
 import { test } from '../../fixtures/pom/test-options';
+import { faker } from '@faker-js/faker';
 
 test.describe('Verify Publish/Edit/Delete an Article', () => {
+    const randomArticleTitle = faker.lorem.words(3);
+    const randomArticleDescription = faker.lorem.sentence();
+    const randomArticleBody = faker.lorem.paragraphs(2);
+    const randomArticleTag = faker.lorem.word();
+
     test.beforeEach(async ({ homePage }) => {
         await homePage.navigateToHomePageUser();
     });
@@ -13,19 +19,19 @@ test.describe('Verify Publish/Edit/Delete an Article', () => {
                 await navPage.newArticleButton.click();
 
                 await articlePage.publishArticle(
-                    'Test_Article',
-                    'Test_Description',
-                    'Test_Body',
-                    'Test_Tag'
+                    randomArticleTitle,
+                    randomArticleDescription,
+                    randomArticleBody,
+                    randomArticleTag
                 );
             });
 
             await test.step('Verify Edit an Article', async () => {
                 await articlePage.editArticle(
-                    'Test_Article_Updated',
-                    'Test_Description_Updated',
-                    'Test_Body_Updated',
-                    'Test_Tag_Updated'
+                    `Updated ${randomArticleTitle}`,
+                    `Updated ${randomArticleDescription}`,
+                    `Updated ${randomArticleBody}`,
+                    `Updated ${randomArticleTag}`
                 );
             });
 
