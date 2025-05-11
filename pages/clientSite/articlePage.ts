@@ -67,6 +67,8 @@ export class ArticlePage {
 
         await this.publishArticleButton.click();
 
+        await this.page.waitForResponse('**/api/articles/*');
+
         await expect(
             this.page.getByRole('heading', { name: title })
         ).toBeVisible();
@@ -97,6 +99,8 @@ export class ArticlePage {
         }
 
         await this.publishArticleButton.click();
+
+        await this.page.waitForResponse('**/api/articles/*');
 
         await expect(
             this.page.getByRole('heading', { name: title })
