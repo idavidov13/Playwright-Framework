@@ -67,7 +67,11 @@ export class ArticlePage {
 
         await this.publishArticleButton.click();
 
-        await this.page.waitForResponse('**/api/articles/*');
+        await this.page.waitForResponse(
+            (response) =>
+                response.url().includes('/api/articles/') &&
+                response.request().method() === 'GET'
+        );
 
         await expect(
             this.page.getByRole('heading', { name: title })
@@ -100,7 +104,11 @@ export class ArticlePage {
 
         await this.publishArticleButton.click();
 
-        await this.page.waitForResponse('**/api/articles/*');
+        await this.page.waitForResponse(
+            (response) =>
+                response.url().includes('/api/articles/') &&
+                response.request().method() === 'GET'
+        );
 
         await expect(
             this.page.getByRole('heading', { name: title })
