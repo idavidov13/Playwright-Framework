@@ -39,7 +39,7 @@ export async function apiRequest({
     if (body) options.data = body;
     if (headers) {
         options.headers = {
-            Authorization: `Bearer ${headers}`,
+            Authorization: `Token ${headers}`,
             'Content-Type': 'application/json',
             tenantid: process.env.TENANT_ID!,
         };

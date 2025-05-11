@@ -1,0 +1,40 @@
+{
+    "create": {
+        "article": {
+            "title": "Playwright Framework",
+            "description": "Example Playwright Automation Framework",
+            "body": "MVP for Playwright Automation Framework. Features TypeScript, Page Object Model Design Patter, Custom Fixtures, REST API Testing and Mocking, Schema Validation with Zod, Environment Utilization and CI/CD integration with GitHub Actions",
+            "tagList": [
+                "testing",
+                "playwright",
+                "automation",
+                "typescript",
+                "POM",
+                "api",
+                "mocking",
+                "Zod",
+                "CI/CD",
+                "GitHub Actions"
+            ]
+        }
+    },
+    "update": {
+        "article": {
+            "title": "In today's AI-driven world, Quality Assurance holds more importance than ever.",
+            "description": "Example Playwright Automation Framework",
+            "body": "MVP for Playwright Automation Framework. Features TypeScript, Page Object Model Design Patter, Custom Fixtures, REST API Testing and Mocking, Schema Validation with Zod, Environment Utilization and CI/CD integration with GitHub Actions",
+            "tagList": [
+                "testing",
+                "playwright",
+                "automation",
+                "typescript",
+                "POM",
+                "api",
+                "mocking",
+                "Zod",
+                "CI/CD",
+                "GitHub Actions"
+            ]
+        }
+    }
+}
