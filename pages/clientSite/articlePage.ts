@@ -44,6 +44,17 @@ export class ArticlePage {
     }
 
     /**
+     * Navigates to the edit article page by clicking the edit button.
+     * Waits for the page to reach a network idle state after navigation.
+     * @returns {Promise<void>}
+     */
+    async navigateToEditArticlePage(): Promise<void> {
+        await this.editArticleButton.click();
+
+        await this.page.waitForLoadState('networkidle');
+    }
+
+    /**
      * Publishes an article with the given details.
      * @param {string} title - The title of the article.
      * @param {string} description - A brief description of the article.
@@ -92,10 +103,6 @@ export class ArticlePage {
         body: string,
         tags?: string
     ): Promise<void> {
-        await this.editArticleButton.click();
-
-        await this.page.waitForLoadState('networkidle');
-
         await this.articleTitleInput.fill(title);
         await this.articleDescriptionInput.fill(description);
         await this.articleBodyInput.fill(body);
