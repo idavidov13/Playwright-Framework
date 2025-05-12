@@ -13,7 +13,7 @@ env:
     USER_NAME: ${{ secrets.USER_NAME }}
     EMAIL: ${{ secrets.EMAIL }}
     PASSWORD: ${{ secrets.PASSWORD }}
-    
+
 jobs:
     setup-and-smoke-test:
         name: Setup and Smoke Test
@@ -101,3 +101,46 @@ jobs:
               uses: ./.github/actions/playwright-report
               with:
                   test-step-outcome: ${{ steps.regression.outcome }}
+
+    deploy-report:
+        name: Deploy Report
+        if: always()
+        needs: [setup-and-smoke-test, sanity-test, api-test, regression-test]
+        timeout-minutes: 60
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Download All Artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  path: merged-reports/
+
+            - name: Merge HTML Reports
+              run: |
+                  mkdir -p merged-reports/html
+                  for dir in merged-reports/*; do
+                      if [ -f "$dir/index.html" ]; then
+                          cp -r "$dir/"* merged-reports/html/
+                      fi
+                  done
+
+            - name: Upload Merged Reports as Artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: Merged HTML Reports
+                  path: merged-reports/html/
+                  retention-days: 3
+
+            - name: Setup Pages
+              uses: actions/configure-pages@v5
+
+            - name: Upload Pages Artifact
+              uses: actions/upload-pages-artifact@v3
+              with:
+                  path: merged-reports/html/
+
+            - name: Deploy to GitHub Pages
+              id: deployment
+              uses: actions/deploy-pages@v4
