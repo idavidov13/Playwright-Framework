@@ -5,3 +5,4 @@ node_modules/
 /playwright/.cache/
 env/
 userSession.json
+json-report/

@@ -1,9 +1,5 @@
 name: Playwright Tests on Custom Runner
 on:
-    push:
-        branches: [main, master]
-    pull_request:
-        branches: [main, master]
     workflow_dispatch:
 env:
     URL: ${{ secrets.URL }}
@@ -29,6 +25,13 @@ jobs:
                   name: Smoke test report-${{ github.run_id }}
                   path: playwright-report/
                   retention-days: 3
+            - name: Upload JSON Report
+              uses: actions/upload-artifact@v4
+              if: ${{ !cancelled() }}
+              with:
+                  name: Smoke test JSON report-${{ github.run_id }}
+                  path: ./json-report/test-results.json
+                  retention-days: 3
     sanity-test:
         needs: setup-and-smoke-test
         timeout-minutes: 60
@@ -46,6 +49,13 @@ jobs:
               with:
                   name: Sanity test report-${{ github.run_id }}
                   path: playwright-report/
+                  retention-days: 3
+            - name: Upload JSON Report
+              uses: actions/upload-artifact@v4
+              if: ${{ !cancelled() }}
+              with:
+                  name: Sanity test JSON report-${{ github.run_id }}
+                  path: ./json-report/test-results.json
                   retention-days: 3
     api-test:
         needs: setup-and-smoke-test
@@ -65,6 +75,13 @@ jobs:
                   name: API test report-${{ github.run_id }}
                   path: playwright-report/
                   retention-days: 3
+            - name: Upload JSON Report
+              uses: actions/upload-artifact@v4
+              if: ${{ !cancelled() }}
+              with:
+                  name: API test JSON report-${{ github.run_id }}
+                  path: ./json-report/test-results.json
+                  retention-days: 3
     regression-test:
         needs: setup-and-smoke-test
         timeout-minutes: 60
@@ -82,4 +99,11 @@ jobs:
               with:
                   name: Regression test report-${{ github.run_id }}
                   path: playwright-report/
+                  retention-days: 3
+            - name: Upload JSON Report
+              uses: actions/upload-artifact@v4
+              if: ${{ !cancelled() }}
+              with:
+                  name: Regression test JSON report-${{ github.run_id }}
+                  path: ./json-report/test-results.json
                   retention-days: 3
