@@ -1,16 +1,19 @@
 name: Playwright Tests on Custom Runner Extended
+
 on:
     push:
         branches: [main, master]
     pull_request:
         branches: [main, master]
     workflow_dispatch:
+
 env:
     URL: ${{ secrets.URL }}
     API_URL: ${{ secrets.API_URL }}
     USER_NAME: ${{ secrets.USER_NAME }}
     EMAIL: ${{ secrets.EMAIL }}
     PASSWORD: ${{ secrets.PASSWORD }}
+    
 jobs:
     setup-and-smoke-test:
         name: Setup and Smoke Test
