@@ -1,0 +1,52 @@
+name: 'Playwright Reports'
+description: 'Upload Playwright Reports'
+inputs:
+    html-report:
+        description: 'Wheather html report is generated or not'
+        required: false
+        default: 'true'
+    html-report-upload:
+        description: 'Wheather to always upload html report as artifact or only on failure'
+        required: false
+        default: 'false'
+    html-report-retention-days:
+        description: 'Retention days for html report'
+        required: false
+        default: '3'
+    html-report-path:
+        description: 'Path for html report'
+        required: false
+        default: 'playwright-report/'
+    json-report:
+        description: 'Wheather json report is generated or not'
+        required: false
+        default: 'true'
+    json-report-upload:
+        description: 'Wheather to always upload json report as artifact or only on failure'
+        required: false
+        default: 'false'
+    json-report-retention-days:
+        description: 'Retention days for json report'
+        required: false
+        default: '3'
+    json-report-path:
+        description: 'Path for json report'
+        required: false
+        default: './json-report/'
+runs:
+    using: 'composite'
+    steps:
+        - name: Upload Playwright Report
+          uses: actions/upload-artifact@v4
+          if: ${{ !cancelled() }} && ${{ inputs.html-report == 'true' }} && (${{ inputs.html-report-upload == 'true' }} || ${{ failure() }})
+          with:
+              name: Smoke test HTML report-${{ github.run_id }}
+              path: ${{ inputs.html-report-path }}
+              retention-days: ${{ inputs.html-report-retention-days }}
+        - name: Upload JSON Report
+          uses: actions/upload-artifact@v4
+          if: ${{ !cancelled() }} && ${{ inputs.json-report == 'true' }} && (${{ inputs.json-report-upload == 'true' }} || ${{ failure() }})
+          with:
+              name: Smoke test JSON report-${{ github.run_id }}
+              path: ${{ inputs.json-report-path }}
+              retention-days: ${{ inputs.json-report-retention-days }}

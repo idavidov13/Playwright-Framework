@@ -22,13 +22,8 @@ jobs:
               uses: ./.github/actions/playwright-setup
             - name: Run Smoke tests
               run: npm run smoke
-            - name: Upload Playwright Report
-              uses: actions/upload-artifact@v4
-              if: ${{ !cancelled() }}
-              with:
-                  name: Smoke test report-${{ github.run_id }}
-                  path: playwright-report/
-                  retention-days: 3
+            - name: Upload Playwright Reports
+              uses: ./.github/actions/playwright-report
     sanity-test:
         needs: setup-and-smoke-test
         timeout-minutes: 60
@@ -40,13 +35,8 @@ jobs:
               uses: ./.github/actions/playwright-setup
             - name: Run Sanity tests
               run: npm run sanity
-            - name: Upload Playwright Report
-              uses: actions/upload-artifact@v4
-              if: ${{ !cancelled() }}
-              with:
-                  name: Sanity test report-${{ github.run_id }}
-                  path: playwright-report/
-                  retention-days: 3
+            - name: Upload Playwright Reports
+              uses: ./.github/actions/playwright-report
     api-test:
         needs: setup-and-smoke-test
         timeout-minutes: 60
@@ -58,13 +48,8 @@ jobs:
               uses: ./.github/actions/playwright-setup
             - name: Run API tests
               run: npm run api
-            - name: Upload Playwright Report
-              uses: actions/upload-artifact@v4
-              if: ${{ !cancelled() }}
-              with:
-                  name: API test report-${{ github.run_id }}
-                  path: playwright-report/
-                  retention-days: 3
+            - name: Upload Playwright Reports
+              uses: ./.github/actions/playwright-report
     regression-test:
         needs: setup-and-smoke-test
         timeout-minutes: 60
@@ -76,10 +61,5 @@ jobs:
               uses: ./.github/actions/playwright-setup
             - name: Run Regression tests
               run: npm run regression
-            - name: Upload Playwright Report
-              uses: actions/upload-artifact@v4
-              if: ${{ !cancelled() }}
-              with:
-                  name: Regression test report-${{ github.run_id }}
-                  path: playwright-report/
-                  retention-days: 3
+            - name: Upload Playwright Reports
+              uses: ./.github/actions/playwright-report
