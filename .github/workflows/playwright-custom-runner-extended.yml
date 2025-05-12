@@ -113,6 +113,8 @@ jobs:
         needs: [setup-and-smoke-test, sanity-test, api-test, regression-test]
         timeout-minutes: 60
         runs-on: ubuntu-latest
+        outputs:
+            report_url: ${{ steps.deployment.outputs.page_url }} # Set the deployment URL as a job output
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
