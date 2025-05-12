@@ -114,7 +114,7 @@ jobs:
         timeout-minutes: 60
         runs-on: ubuntu-latest
         outputs:
-            report_url: 'https://idavidov13.github.io/Playwright-Framework/'
+            report_url: 'LINK TO THE REPORT'
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
