@@ -114,7 +114,7 @@ jobs:
         timeout-minutes: 60
         runs-on: ubuntu-latest
         outputs:
-            report_url: ${{ steps.deployment.outputs.page_url }} # Set the deployment URL as a job output
+            report_url: 'https://idavidov13.github.io/Playwright-Framework/'
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
