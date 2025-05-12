@@ -111,13 +111,10 @@ jobs:
         name: Deploy Report
         if: always()
         needs: [setup-and-smoke-test, sanity-test, api-test, regression-test]
-        environment:
-            name: github-pages
-            url: ${{ steps.deployment.outputs.page_url }}
         timeout-minutes: 60
         runs-on: ubuntu-latest
         outputs:
-            report_url: 'LINK TO THE REPORT'
+            report_url: ${{ steps.deployment.outputs.page_url }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
@@ -170,9 +167,3 @@ jobs:
             - name: Deploy to GitHub Pages
               id: deployment
               uses: actions/deploy-pages@v4
-
-            - name: Show Deployed Report URL
-              if: always()
-              run: |
-                  echo "Deployed Report URL: ${{ steps.deployment.outputs.page_url }}"
-              shell: bash
