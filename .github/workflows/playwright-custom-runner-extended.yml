@@ -1,4 +1,4 @@
-name: Playwright Tests on Custom Runner
+name: Playwright Tests on Custom Runner Extended
 on:
     push:
         branches: [main, master]
@@ -21,9 +21,13 @@ jobs:
             - name: Playwright Setup on Runner
               uses: ./.github/actions/playwright-setup
             - name: Run Smoke tests
+              id: smoke
               run: npm run smoke
             - name: Upload Playwright Reports
+              if: always()
               uses: ./.github/actions/playwright-report
+              with:
+                  test-step-outcome: ${{ steps.smoke.outcome }}
     sanity-test:
         needs: setup-and-smoke-test
         timeout-minutes: 60
@@ -34,9 +38,13 @@ jobs:
             - name: Playwright Setup on Runner
               uses: ./.github/actions/playwright-setup
             - name: Run Sanity tests
+              id: sanity
               run: npm run sanity
             - name: Upload Playwright Reports
+              if: always()
               uses: ./.github/actions/playwright-report
+              with:
+                  test-step-outcome: ${{ steps.sanity.outcome }}
     api-test:
         needs: setup-and-smoke-test
         timeout-minutes: 60
@@ -47,9 +55,13 @@ jobs:
             - name: Playwright Setup on Runner
               uses: ./.github/actions/playwright-setup
             - name: Run API tests
+              id: api
               run: npm run api
             - name: Upload Playwright Reports
+              if: always()
               uses: ./.github/actions/playwright-report
+              with:
+                  test-step-outcome: ${{ steps.api.outcome }}
     regression-test:
         needs: setup-and-smoke-test
         timeout-minutes: 60
@@ -60,6 +72,10 @@ jobs:
             - name: Playwright Setup on Runner
               uses: ./.github/actions/playwright-setup
             - name: Run Regression tests
+              id: regression
               run: npm run regression
             - name: Upload Playwright Reports
+              if: always()
               uses: ./.github/actions/playwright-report
+              with:
+                  test-step-outcome: ${{ steps.regression.outcome }}

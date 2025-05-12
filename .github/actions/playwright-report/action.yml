@@ -1,6 +1,9 @@
 name: 'Playwright Reports'
 description: 'Upload Playwright Reports'
 inputs:
+    test-step-outcome:
+        description: 'Outcome of the test step (success or failure)'
+        required: true
     html-report:
         description: 'Wheather html report is generated or not'
         required: false
@@ -38,15 +41,15 @@ runs:
     steps:
         - name: Upload Playwright Report
           uses: actions/upload-artifact@v4
-          if: ${{ !cancelled() }} && ${{ inputs.html-report == 'true' }} && (${{ inputs.html-report-upload == 'true' }} || ${{ failure() }})
+          if: ${{ inputs.html-report == 'true' && (inputs.html-report-upload == 'true' || inputs.test-step-outcome == 'failure') }}
           with:
-              name: Smoke test HTML report-${{ github.run_id }}
+              name: ${{ github.job }} HTML report-${{ github.run_id }}
               path: ${{ inputs.html-report-path }}
               retention-days: ${{ inputs.html-report-retention-days }}
         - name: Upload JSON Report
           uses: actions/upload-artifact@v4
-          if: ${{ !cancelled() }} && ${{ inputs.json-report == 'true' }} && (${{ inputs.json-report-upload == 'true' }} || ${{ failure() }})
+          if: ${{ inputs.json-report == 'true' && (inputs.json-report-upload == 'true' || inputs.test-step-outcome == 'failure') }}
           with:
-              name: Smoke test JSON report-${{ github.run_id }}
+              name: ${{ github.job }} JSON report-${{ github.run_id }}
               path: ${{ inputs.json-report-path }}
               retention-days: ${{ inputs.json-report-retention-days }}
