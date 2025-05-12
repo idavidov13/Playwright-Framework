@@ -111,6 +111,9 @@ jobs:
         name: Deploy Report
         if: always()
         needs: [setup-and-smoke-test, sanity-test, api-test, regression-test]
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
         timeout-minutes: 60
         runs-on: ubuntu-latest
         outputs:
@@ -118,6 +121,22 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
+
+            - name: Cache node_modules
+              uses: actions/cache@v3
+              with:
+                  path: |
+                      node_modules
+                  key: modules-${{ hashFiles('package-lock.json') }}
+
+            - name: Cache Playwright
+              uses: actions/cache@v3
+              with:
+                  path: |
+                      ~/.cache/ms-playwright
+                  key: playwright-${{ hashFiles('package-lock.json') }}
+
+            - uses: actions/checkout@v2
 
             - name: Download All Artifacts
               uses: actions/download-artifact@v4
