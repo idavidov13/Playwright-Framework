@@ -22,6 +22,7 @@ export class NavPage {
     readonly signInButton: Locator;
     readonly signUpNavigationLink: Locator;
     readonly signUpPageTitle: Locator;
+    readonly homePageHeading: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -48,6 +49,7 @@ export class NavPage {
         this.signInButton = page.getByRole('button', { name: 'Sign in' });
         this.signUpNavigationLink = page.getByRole('link', { name: 'Sign up' });
         this.signUpPageTitle = page.getByRole('heading', { name: 'Sign up' });
+        this.homePageHeading = page.getByRole('heading', { name: 'conduit' });
     }
 
     /**
@@ -57,9 +59,7 @@ export class NavPage {
     async navigateToHomePage(): Promise<void> {
         await this.homePageLink.click();
 
-        await expect(
-            this.page.getByRole('heading', { name: 'conduit' })
-        ).toBeVisible();
+        await expect(this.homePageHeading).toBeVisible();
     }
 
     /**
@@ -69,9 +69,7 @@ export class NavPage {
     async navigateToHomePageByIcon(): Promise<void> {
         await this.conduitIcon.click();
 
-        await expect(
-            this.page.getByRole('heading', { name: 'conduit' })
-        ).toBeVisible();
+        await expect(this.homePageHeading).toBeVisible();
     }
 
     /**
@@ -123,8 +121,6 @@ export class NavPage {
 
         await this.logoutButton.click();
 
-        await expect(
-            this.page.getByRole('heading', { name: 'conduit' })
-        ).toBeVisible();
+        await expect(this.homePageHeading).toBeVisible();
     }
 }
