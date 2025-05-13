@@ -135,7 +135,7 @@ jobs:
                       ~/.cache/ms-playwright
                   key: playwright-${{ hashFiles('package-lock.json') }}
 
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
 
             - name: Download All Artifacts
               uses: actions/download-artifact@v4
@@ -161,21 +161,36 @@ jobs:
             - name: Setup Pages
               uses: actions/configure-pages@v5
 
-            - name: Build with Jekyll
-              uses: actions/jekyll-build-pages@v1
-              with:
-                  source: ./
-                  destination: ./_site
-
             - name: Upload Pages Artifact
               uses: actions/upload-pages-artifact@v3
               with:
                   path: merged-reports/html/
 
+    build-report:
+        name: Build Report
+        if: always()
+        needs: merge-report
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Pages
+              uses: actions/configure-pages@v5
+
+            - name: Build with Jekyll
+              uses: actions/jekyll-build-pages@v1
+              with:
+                  source: ./
+                  destination: ./_site
+                  
+            - name: Upload artifact
+              uses: actions/upload-pages-artifact@v3
+
     depoloy-report:
         name: Deploy Report
         if: always()
-        needs: merge-report
+        needs: build-report
         environment:
             name: github-pages
             url: ${{ steps.deployment.outputs.page_url }}
