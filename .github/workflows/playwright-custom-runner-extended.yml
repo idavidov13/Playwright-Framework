@@ -158,30 +158,30 @@ jobs:
                   path: merged-reports/html/
                   retention-days: 3
 
-    build-report:
-        name: Build Report
-        if: always()
-        needs: merge-report
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+    # build-report:
+    #     name: Build Report
+    #     if: always()
+    #     needs: merge-report
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #         - name: Checkout
+    #           uses: actions/checkout@v4
 
-            - name: Download Merged HTML Reports
-              uses: actions/download-artifact@v4
-              with:
-                  name: Merged HTML Reports
-                  path: ./_site
+    #         - name: Download Merged HTML Reports
+    #           uses: actions/download-artifact@v4
+    #           with:
+    #               name: Merged HTML Reports
+    #               path: ./_site
 
-            - name: Upload artifact
-              uses: actions/upload-pages-artifact@v3
-              with:
-                  path: ./_site
+    #         - name: Upload artifact
+    #           uses: actions/upload-pages-artifact@v3
+    #           with:
+    #               path: ./_site
 
     depoloy-report:
         name: Deploy Report
         if: always()
-        needs: build-report
+        needs: merge-report
         environment:
             name: github-pages
             url: ${{ steps.deployment.outputs.page_url }}
