@@ -184,7 +184,6 @@ jobs:
         needs: build-report
         environment:
             name: github-pages
-            url: ${{ steps.deployment.outputs.page_url }}
         runs-on: ubuntu-latest
         outputs:
             report_url: ${{ steps.deployment.outputs.page_url }}
@@ -192,3 +191,7 @@ jobs:
             - name: Deploy to GitHub Pages
               id: deployment
               uses: actions/deploy-pages@v4
+
+            - name: Set Output for Report URL
+              id: set_output
+              run: echo "page_url=${{ steps.deployment.outputs.page_url }}" >> $GITHUB_ENV
