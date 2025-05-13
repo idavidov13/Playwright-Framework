@@ -14,6 +14,15 @@ env:
     EMAIL: ${{ secrets.EMAIL }}
     PASSWORD: ${{ secrets.PASSWORD }}
 
+permissions:
+    contents: read
+    pages: write
+    id-token: write
+
+concurrency:
+    group: 'pages'
+    cancel-in-progress: false
+
 jobs:
     setup-and-smoke-test:
         name: Setup and Smoke Test
@@ -152,6 +161,12 @@ jobs:
             - name: Setup Pages
               uses: actions/configure-pages@v5
 
+            - name: Build with Jekyll
+              uses: actions/jekyll-build-pages@v1
+              with:
+                  source: ./
+                  destination: ./_site
+
             - name: Upload Pages Artifact
               uses: actions/upload-pages-artifact@v3
               with:
@@ -161,13 +176,9 @@ jobs:
         name: Deploy Report
         if: always()
         needs: merge-report
-        permissions:
-            pages: write
-            id-token: write
         environment:
             name: github-pages
             url: ${{ steps.deployment.outputs.page_url }}
-        timeout-minutes: 60
         runs-on: ubuntu-latest
         outputs:
             report_url: ${{ steps.deployment.outputs.page_url }}
