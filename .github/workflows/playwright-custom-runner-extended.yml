@@ -175,14 +175,13 @@ jobs:
                   name: sanity-test HTML report
                   path: merged-reports/sanity-test
 
-            - name: Merge HTML Reports
+            - name: Install Playwright Merge Tool
+              run: npm install -g playwright-merge-html-reports
+
+            - name: Merge Playwright Reports
               run: |
                   mkdir -p merged-reports/html
-                  for dir in merged-reports/*; do
-                      if [ "$dir" != "merged-reports/html" ] && [ -f "$dir/index.html" ]; then
-                          cp -r "$dir/"* merged-reports/html/
-                      fi
-                  done
+                  playwright-merge-html-reports merged-reports/smoke-test merged-reports/api-test merged-reports/regression-test merged-reports/sanity-test -o merged-reports/html
 
             - name: Upload Merged Reports as Artifact
               uses: actions/upload-artifact@v4
