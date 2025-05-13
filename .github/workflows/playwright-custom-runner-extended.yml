@@ -181,12 +181,12 @@ jobs:
             - name: Verify Playwright Merge Tool Installation
               run: |
                   npm install playwright-merge-html-reports --save-dev
-                  npx playwright-merge-html-reports --version
+                  ./node_modules/.bin/playwright-merge-html-reports --version
 
             - name: Merge Playwright Reports
               run: |
                   mkdir -p merged-reports/html
-                  npx playwright-merge-html-reports merged-reports/smoke-test merged-reports/api-test merged-reports/regression-test merged-reports/sanity-test -o merged-reports/html
+                  ./node_modules/.bin/playwright-merge-html-reports merged-reports/smoke-test merged-reports/api-test merged-reports/regression-test merged-reports/sanity-test -o merged-reports/html
 
             - name: Debug Merged Reports
               run: |
