@@ -179,7 +179,7 @@ jobs:
               run: |
                   mkdir -p merged-reports/html
                   for dir in merged-reports/*; do
-                      if [ -f "$dir/index.html" ]; then
+                      if [ "$dir" != "merged-reports/html" ] && [ -f "$dir/index.html" ]; then
                           cp -r "$dir/"* merged-reports/html/
                       fi
                   done
