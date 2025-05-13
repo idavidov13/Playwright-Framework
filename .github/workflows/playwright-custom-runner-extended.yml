@@ -194,5 +194,5 @@ jobs:
 
             - name: Set Output for Report URL
               id: set_output
-              run: echo "page_url=${{ steps.deployment.outputs.page_url }}" >> $GITHUB_ENV
+              run: echo "page_url=${{ steps.deployment.outputs.page_url }}" >> $GITHUB_OUTPUTS
               shell: bash
