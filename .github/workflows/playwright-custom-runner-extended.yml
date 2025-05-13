@@ -28,6 +28,8 @@ jobs:
         name: Setup and Smoke Test
         timeout-minutes: 60
         runs-on: ubuntu-latest
+        outputs:
+            smoke_outcome: ${{ steps.smoke.outcome }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
@@ -51,6 +53,8 @@ jobs:
         needs: setup-and-smoke-test
         timeout-minutes: 60
         runs-on: ubuntu-latest
+        outputs:
+            sanity_outcome: ${{ steps.sanity.outcome }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
@@ -74,6 +78,8 @@ jobs:
         needs: setup-and-smoke-test
         timeout-minutes: 60
         runs-on: ubuntu-latest
+        outputs:
+            api_outcome: ${{ steps.api.outcome }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
@@ -97,6 +103,8 @@ jobs:
         needs: setup-and-smoke-test
         timeout-minutes: 60
         runs-on: ubuntu-latest
+        outputs:
+            regression_outcome: ${{ steps.regression.outcome }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
@@ -140,28 +148,28 @@ jobs:
                   key: playwright-${{ hashFiles('package-lock.json') }}
 
             - name: Download Smoke Test Report
-              if: steps.smoke.outcome == 'failure'
+              if: ${{ needs.setup-and-smoke-test.outputs.smoke_outcome == 'failure' }}
               uses: actions/download-artifact@v4
               with:
                   name: smoke-test HTML report
                   path: merged-reports/smoke-test
 
             - name: Download API Test Report
-              if: steps.api.outcome == 'failure'
+              if: ${{ needs.api-test.outputs.api_outcome == 'failure' }}
               uses: actions/download-artifact@v4
               with:
                   name: api-test HTML report
                   path: merged-reports/api-test
 
             - name: Download Regression Test Report
-              if: steps.regression.outcome == 'failure'
+              if: ${{ needs.regression-test.outputs.regression_outcome == 'failure' }}
               uses: actions/download-artifact@v4
               with:
                   name: regression-test HTML report
                   path: merged-reports/regression-test
 
             - name: Download Sanity Test Report
-              if: steps.sanity.outcome == 'failure'
+              if: ${{ needs.sanity-test.outputs.sanity_outcome == 'failure' }}
               uses: actions/download-artifact@v4
               with:
                   name: sanity-test HTML report
