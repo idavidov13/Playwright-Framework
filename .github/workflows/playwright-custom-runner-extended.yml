@@ -140,24 +140,28 @@ jobs:
                   key: playwright-${{ hashFiles('package-lock.json') }}
 
             - name: Download Smoke Test Report
+              if: steps.smoke.outcome == 'failure'
               uses: actions/download-artifact@v4
               with:
                   name: smoke-test HTML report
                   path: merged-reports/smoke-test
 
             - name: Download API Test Report
+              if: steps.api.outcome == 'failure'
               uses: actions/download-artifact@v4
               with:
                   name: api-test HTML report
                   path: merged-reports/api-test
 
             - name: Download Regression Test Report
+              if: steps.regression.outcome == 'failure'
               uses: actions/download-artifact@v4
               with:
                   name: regression-test HTML report
                   path: merged-reports/regression-test
 
             - name: Download Sanity Test Report
+              if: steps.sanity.outcome == 'failure'
               uses: actions/download-artifact@v4
               with:
                   name: sanity-test HTML report
