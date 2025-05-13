@@ -44,6 +44,7 @@ jobs:
               uses: ./.github/actions/playwright-report
               with:
                   test-step-outcome: ${{ steps.smoke.outcome }}
+                  json-report: false
 
     sanity-test:
         name: Sanity Test
@@ -66,6 +67,7 @@ jobs:
               uses: ./.github/actions/playwright-report
               with:
                   test-step-outcome: ${{ steps.sanity.outcome }}
+                  json-report: false
 
     api-test:
         name: API Test
@@ -88,6 +90,7 @@ jobs:
               uses: ./.github/actions/playwright-report
               with:
                   test-step-outcome: ${{ steps.api.outcome }}
+                  json-report: false
 
     regression-test:
         name: Regression Test
@@ -110,6 +113,7 @@ jobs:
               uses: ./.github/actions/playwright-report
               with:
                   test-step-outcome: ${{ steps.regression.outcome }}
+                  json-report: false
 
     merge-report:
         name: Merge Report
@@ -135,12 +139,29 @@ jobs:
                       ~/.cache/ms-playwright
                   key: playwright-${{ hashFiles('package-lock.json') }}
 
-            - uses: actions/checkout@v4
-
-            - name: Download All Artifacts
+            - name: Download Smoke Test Report
               uses: actions/download-artifact@v4
               with:
-                  path: merged-reports/
+                  name: smoke-test HTML report
+                  path: merged-reports/smoke-test
+
+            - name: Download API Test Report
+              uses: actions/download-artifact@v4
+              with:
+                  name: api-test HTML report
+                  path: merged-reports/api-test
+
+            - name: Download Regression Test Report
+              uses: actions/download-artifact@v4
+              with:
+                  name: regression-test HTML report
+                  path: merged-reports/regression-test
+
+            - name: Download Sanity Test Report
+              uses: actions/download-artifact@v4
+              with:
+                  name: sanity-test HTML report
+                  path: merged-reports/sanity-test
 
             - name: Merge HTML Reports
               run: |
