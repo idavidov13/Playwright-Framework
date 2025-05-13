@@ -14,11 +14,6 @@ env:
     EMAIL: ${{ secrets.EMAIL }}
     PASSWORD: ${{ secrets.PASSWORD }}
 
-permissions:
-    id-token: write
-    contents: read
-    pages: write
-
 jobs:
     setup-and-smoke-test:
         name: Setup and Smoke Test
@@ -107,14 +102,12 @@ jobs:
               with:
                   test-step-outcome: ${{ steps.regression.outcome }}
 
-    deploy-report:
-        name: Deploy Report
+    merge-report:
+        name: Merge Report
         if: always()
         needs: [setup-and-smoke-test, sanity-test, api-test, regression-test]
         timeout-minutes: 60
         runs-on: ubuntu-latest
-        outputs:
-            report_url: ${{ steps.deployment.outputs.page_url }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
@@ -164,6 +157,21 @@ jobs:
               with:
                   path: merged-reports/html/
 
+    depoloy-report:
+        name: Deploy Report
+        if: always()
+        needs: merge-report
+        permissions:
+            pages: write
+            id-token: write
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
+        timeout-minutes: 60
+        runs-on: ubuntu-latest
+        outputs:
+            report_url: ${{ steps.deployment.outputs.page_url }}
+        steps:
             - name: Deploy to GitHub Pages
               id: deployment
               uses: actions/deploy-pages@v4
