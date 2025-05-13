@@ -178,8 +178,10 @@ jobs:
             - name: Ensure Dependencies
               run: npm ci
 
-            - name: Install Playwright Merge Tool
-              run: npm install playwright-merge-html-reports --save-dev
+            - name: Verify Playwright Merge Tool Installation
+              run: |
+                  npm install playwright-merge-html-reports --save-dev
+                  npx playwright-merge-html-reports --version
 
             - name: Merge Playwright Reports
               run: |
