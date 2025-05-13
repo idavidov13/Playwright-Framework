@@ -184,7 +184,7 @@ jobs:
         needs: build-report
         environment:
             name: github-pages
-            url: ${{ env.URL }}
+            url: 'https://idavidov13.github.io/Playwright-Framework/'
         runs-on: ubuntu-latest
         steps:
             - name: Deploy to GitHub Pages
