@@ -186,7 +186,13 @@ jobs:
                   mkdir -p merged-reports/html
                   npx playwright-merge-html-reports merged-reports/smoke-test merged-reports/api-test merged-reports/regression-test merged-reports/sanity-test -o merged-reports/html
 
+            - name: Debug Merged Reports
+              run: |
+                  echo "Checking merged-reports/html directory..."
+                  ls -la merged-reports/html
+
             - name: Upload Merged Reports as Artifact
+              if: ${{ always() }}
               uses: actions/upload-artifact@v4
               with:
                   name: Merged HTML Reports
