@@ -194,5 +194,7 @@ jobs:
 
             - name: Set Output for Report URL
               id: set_output
-              run: echo "page_url=${{ steps.deployment.outputs.page_url }}" >> $GITHUB_OUTPUT
+              run: |
+                  echo "page_url=${{ steps.deployment.outputs.page_url }}" >> $GITHUB_OUTPUT
+                  echo "::add-mask::${{ steps.deployment.outputs.page_url }}"
               shell: bash
