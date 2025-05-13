@@ -186,7 +186,7 @@ jobs:
             name: github-pages
         runs-on: ubuntu-latest
         outputs:
-            report_url: ${{ steps.deployment.outputs.page_url }}
+            report_url: ${{ steps.set_output.outputs.page_url }}
         steps:
             - name: Deploy to GitHub Pages
               id: deployment
@@ -195,3 +195,4 @@ jobs:
             - name: Set Output for Report URL
               id: set_output
               run: echo "page_url=${{ steps.deployment.outputs.page_url }}" >> $GITHUB_ENV
+              shell: bash
