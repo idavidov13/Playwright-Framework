@@ -43,13 +43,13 @@ runs:
           uses: actions/upload-artifact@v4
           if: ${{ inputs.html-report == 'true' && (inputs.html-report-upload == 'true' || inputs.test-step-outcome == 'failure') }}
           with:
-              name: ${{ github.job }} HTML report-${{ github.run_id }}
+              name: ${{ github.job }} HTML report
               path: ${{ inputs.html-report-path }}
               retention-days: ${{ inputs.html-report-retention-days }}
         - name: Upload JSON Report
           uses: actions/upload-artifact@v4
           if: ${{ inputs.json-report == 'true' && (inputs.json-report-upload == 'true' || inputs.test-step-outcome == 'failure') }}
           with:
-              name: ${{ github.job }} JSON report-${{ github.run_id }}
+              name: ${{ github.job }} JSON report
               path: ${{ inputs.json-report-path }}
               retention-days: ${{ inputs.json-report-retention-days }}
