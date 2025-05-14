@@ -46,7 +46,7 @@ jobs:
               uses: ./.github/actions/playwright-report
               with:
                   test-step-outcome: ${{ steps.smoke.outcome }}
-                  json-report: false
+                  blob-report: false
 
     sanity-test:
         name: Sanity Test
@@ -71,7 +71,7 @@ jobs:
               uses: ./.github/actions/playwright-report
               with:
                   test-step-outcome: ${{ steps.sanity.outcome }}
-                  json-report: false
+                  blob-report: false
 
     api-test:
         name: API Test
@@ -96,7 +96,7 @@ jobs:
               uses: ./.github/actions/playwright-report
               with:
                   test-step-outcome: ${{ steps.api.outcome }}
-                  json-report: false
+                  blob-report: false
 
     regression-test:
         name: Regression Test
@@ -121,7 +121,7 @@ jobs:
               uses: ./.github/actions/playwright-report
               with:
                   test-step-outcome: ${{ steps.regression.outcome }}
-                  json-report: false
+                  blob-report: false
 
     merge-report:
         name: Merge Report
