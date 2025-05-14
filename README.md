@@ -174,12 +174,18 @@ The framework includes three GitHub Actions workflows for CI/CD:
 1. **playwright-container.yml**: Runs tests inside a Docker container for consistent and isolated environments.
 2. **playwright-custom-runner.yml**: Executes tests on a custom GitHub runner for enhanced control over the test environment.
 3. **playwright-runner.yml**: Runs tests on the default GitHub runner.
+4. **playwright-custom-runner-extended.yml**: Runs tests on the default GitHub runner, Merge all uploaded test Reports, Build GitHub Page and Deploy it.
 
 ### Workflow Details
 
 -   **Environment Variables**: All workflows use environment variables defined in GitHub Secrets.
 -   **Test Stages**: Each workflow includes stages for smoke, sanity, API, and regression tests.
 -   **Reports**: Test reports are uploaded as artifacts for review.
+-   **Merge Report (Optional)**: All uploaded reports are downloaded, merged in one, and merged report is uploaded as artifact.
+-   **Build Report (Optional)**: Merged report is downloaded and github-pages are genereted and uploaded as artifact.
+-   **Deploy Report (Optional)**: Uploaded github-pages is deployed in GitHub Pages for the workflow.
+    -   **Note:** Due to GitHub consideration of url to consist secrets, the workaround was to hardcode the url for the GitHub Pages, so it appears just below the job name and it is easily accesible for everyone.
+    -   **TO DO:** If the job is implemented, the URL should be updated.
 
 ## Coding Standards
 
