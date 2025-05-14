@@ -50,6 +50,6 @@ runs:
           uses: actions/upload-artifact@v4
           if: ${{ inputs.blob-report == 'true' && (inputs.blob-report-upload == 'true' || inputs.test-step-outcome == 'failure') }}
           with:
-              name: ${{ github.job }} BLOB report
+              name: blob-report-${{ github.job }}
               path: ${{ inputs.blob-report-path }}
               retention-days: ${{ inputs.blob-report-retention-days }}
