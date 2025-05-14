@@ -169,7 +169,7 @@ npm run fullTest    # Run the full test suite
 
 ## GitHub Actions
 
-The framework includes three GitHub Actions workflows for CI/CD:
+The framework includes four GitHub Actions workflows for CI/CD:
 
 1. **playwright-container.yml**: Runs tests inside a Docker container for consistent and isolated environments.
 2. **playwright-custom-runner.yml**: Executes tests on a custom GitHub runner for enhanced control over the test environment.
