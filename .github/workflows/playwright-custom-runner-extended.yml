@@ -133,33 +133,29 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - name: Ensure Dependencies
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: lts/*
+
+            - name: Install Dependencies
               run: npm ci
 
-            - name: Install Playwright Merge Tool
-              run: npm install playwright-merge-html-reports --save-dev
+            - name: Download blob reports from GitHub Actions Artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  path: all-blob-reports
+                  pattern: blob-report-*
+                  merge-multiple: true
 
-            - name: Debug Node Modules
-              run: |
-                  echo "Checking node_modules/.bin directory..."
-                  ls -la ./node_modules/.bin
+            - name: Merge into HTML Report
+              run: npx playwright merge-reports --reporter html ./all-blob-reports
 
-            - name: Merge Playwright Reports
-              run: |
-                  mkdir -p merged-reports/html
-                  ./node_modules/.bin/playwright-merge-html-reports merged-reports/smoke-test merged-reports/api-test merged-reports/regression-test merged-reports/sanity-test -o merged-reports/html
-
-            - name: Debug Merged Reports
-              run: |
-                  echo "Checking merged-reports/html directory..."
-                  ls -la merged-reports/html
-
-            - name: Upload Merged Reports as Artifact
-              if: ${{ always() }}
+            - name: Upload HTML report
               uses: actions/upload-artifact@v4
               with:
-                  name: Merged HTML Reports
-                  path: merged-reports/html/
+                  name: html-report--attempt-${{ github.run_attempt }}
+                  path: playwright-report
                   retention-days: 3
 
     build-report:

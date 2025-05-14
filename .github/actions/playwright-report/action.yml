@@ -7,7 +7,7 @@ inputs:
     html-report:
         description: 'Wheather html report is generated or not'
         required: false
-        default: 'true'
+        default: 'false'
     html-report-upload:
         description: 'Wheather to always upload html report as artifact or only on failure'
         required: false
@@ -20,22 +20,22 @@ inputs:
         description: 'Path for html report'
         required: false
         default: 'playwright-report/'
-    json-report:
-        description: 'Wheather json report is generated or not'
+    blob-report:
+        description: 'Wheather blob report is generated or not'
         required: false
         default: 'true'
-    json-report-upload:
-        description: 'Wheather to always upload json report as artifact or only on failure'
+    blob-report-upload:
+        description: 'Wheather to always upload blob report as artifact or only on failure'
         required: false
         default: 'false'
-    json-report-retention-days:
-        description: 'Retention days for json report'
+    blob-report-retention-days:
+        description: 'Retention days for blob report'
         required: false
         default: '3'
-    json-report-path:
-        description: 'Path for json report'
+    blob-report-path:
+        description: 'Path for blob report'
         required: false
-        default: './json-report/'
+        default: 'blob-report'
 runs:
     using: 'composite'
     steps:
@@ -46,10 +46,10 @@ runs:
               name: ${{ github.job }} HTML report
               path: ${{ inputs.html-report-path }}
               retention-days: ${{ inputs.html-report-retention-days }}
-        - name: Upload JSON Report
+        - name: Upload BLOB Report
           uses: actions/upload-artifact@v4
-          if: ${{ inputs.json-report == 'true' && (inputs.json-report-upload == 'true' || inputs.test-step-outcome == 'failure') }}
+          if: ${{ inputs.blob-report == 'true' && (inputs.blob-report-upload == 'true' || inputs.test-step-outcome == 'failure') }}
           with:
-              name: ${{ github.job }} JSON report
-              path: ${{ inputs.json-report-path }}
-              retention-days: ${{ inputs.json-report-retention-days }}
+              name: ${{ github.job }} BLOB report
+              path: ${{ inputs.blob-report-path }}
+              retention-days: ${{ inputs.blob-report-retention-days }}
