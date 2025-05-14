@@ -41,7 +41,7 @@ jobs:
               id: smoke
               run: npm run smoke
 
-            - name: Upload Playwright Reports
+            - name: Upload Playwright Report
               if: always()
               uses: ./.github/actions/playwright-report
               with:
@@ -65,7 +65,7 @@ jobs:
               id: sanity
               run: npm run sanity
 
-            - name: Upload Playwright Reports
+            - name: Upload Playwright Report
               if: always()
               uses: ./.github/actions/playwright-report
               with:
@@ -89,7 +89,7 @@ jobs:
               id: api
               run: npm run api
 
-            - name: Upload Playwright Reports
+            - name: Upload Playwright Report
               if: always()
               uses: ./.github/actions/playwright-report
               with:
@@ -113,7 +113,7 @@ jobs:
               id: regression
               run: npm run regression
 
-            - name: Upload Playwright Reports
+            - name: Upload Playwright Report
               if: always()
               uses: ./.github/actions/playwright-report
               with:

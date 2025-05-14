@@ -1,29 +1,9 @@
-name: 'Playwright Reports'
-description: 'Upload Playwright Reports'
+name: 'Playwright Report'
+description: 'Upload Playwright Report'
 inputs:
     test-step-outcome:
         description: 'Outcome of the test step (success or failure)'
         required: true
-    html-report:
-        description: 'Wheather html report is generated or not'
-        required: false
-        default: 'false'
-    html-report-upload:
-        description: 'Wheather to always upload html report as artifact or only on failure'
-        required: false
-        default: 'false'
-    html-report-retention-days:
-        description: 'Retention days for html report'
-        required: false
-        default: '3'
-    html-report-path:
-        description: 'Path for html report'
-        required: false
-        default: 'playwright-report/'
-    blob-report:
-        description: 'Wheather blob report is generated or not'
-        required: false
-        default: 'true'
     blob-report-upload:
         description: 'Wheather to always upload blob report as artifact or only on failure'
         required: false
@@ -39,16 +19,9 @@ inputs:
 runs:
     using: 'composite'
     steps:
-        - name: Upload Playwright Report
-          uses: actions/upload-artifact@v4
-          if: ${{ inputs.html-report == 'true' && (inputs.html-report-upload == 'true' || inputs.test-step-outcome == 'failure') }}
-          with:
-              name: ${{ github.job }} HTML report
-              path: ${{ inputs.html-report-path }}
-              retention-days: ${{ inputs.html-report-retention-days }}
         - name: Upload BLOB Report
           uses: actions/upload-artifact@v4
-          if: ${{ inputs.blob-report == 'true' && (inputs.blob-report-upload == 'true' || inputs.test-step-outcome == 'failure') }}
+          if: ${{ inputs.blob-report-upload == 'true' || inputs.test-step-outcome == 'failure' }}
           with:
               name: blob-report-${{ github.job }}
               path: ${{ inputs.blob-report-path }}
