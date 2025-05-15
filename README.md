@@ -1,6 +1,6 @@
 # Playwright-Framework
 
-MVP(Minimal Viable Product) for Playwright Automation Framework. Features TypeScript, Page Object Model Design Pattern, Custom Fixtures, REST API Testing and Mocking, Schema Validation with Zod, Environment Utilization, and CI/CD integration with GitHub Actions.
+MVP(Minimal Viable Product) for Playwright Automation Framework. Features TypeScript, Page Object Model Design Pattern, Custom Fixtures, REST API Testing and Mocking, Schema Validation with Zod, Environment Utilization, and CI/CD integration with GitHub Actions and GitLab CI/CD.
 
 ## Table of Contents
 
@@ -192,7 +192,7 @@ The framework includes four GitHub Actions workflows for CI/CD (you can find the
 
 The framework includes GitLab pipeline for CI/CD (you can find the repository with implemented GitLab CI/CD [here](https://gitlab.com/idavidov13/playwright-framework)):
 
-### Workflow Details
+### Pipeline Details
 
 -   **Environment Variables**: The Pipeline use environment variables defined in GitLab Setting > CI/CD > Variables.
 -   **Test Stages**: The Pipeline includes stages for setup and smoke test, and testing stage (sanity tests, API tests, and regression tests)
