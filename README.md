@@ -12,6 +12,7 @@ MVP(Minimal Viable Product) for Playwright Automation Framework. Features TypeSc
 -   [Environment Variables](#environment-variables)
 -   [Running Tests Locally](#running-tests-locally)
 -   [GitHub Actions](#github-actions)
+-   [GitLab CI/CD](#gitlab-ci---cd)
 -   [Coding Standards](#coding-standards)
 
 ## Introduction
@@ -169,7 +170,7 @@ npm run fullTest    # Run the full test suite
 
 ## GitHub Actions
 
-The framework includes four GitHub Actions workflows for CI/CD:
+The framework includes four GitHub Actions workflows for CI/CD (you can find the repository with implemented GitHub Actions [here](https://github.com/idavidov13/Playwright-Framework)):
 
 1. **playwright-container.yml**: Runs tests inside a Docker container for consistent and isolated environments.
 2. **playwright-custom-runner.yml**: Executes tests on a custom GitHub runner for enhanced control over the test environment.
@@ -179,13 +180,26 @@ The framework includes four GitHub Actions workflows for CI/CD:
 ### Workflow Details
 
 -   **Environment Variables**: All workflows use environment variables defined in GitHub Secrets.
--   **Test Stages**: Each workflow includes stages for smoke, sanity, API, and regression tests.
+-   **Test Stages**: The Pipeline includes stages for setup and smoke test, and testing stage (sanity tests, API tests, and regression tests)
 -   **Reports**: Test reports are uploaded as artifacts for review.
 -   **Merge Report (Optional)**: All uploaded reports are downloaded, merged in one, and merged report is uploaded as artifact.
 -   **Build Report (Optional)**: Merged report is downloaded and github-pages are genereted and uploaded as artifact.
 -   **Deploy Report (Optional)**: Uploaded github-pages is deployed in GitHub Pages for the workflow.
     -   **Note:** Due to GitHub consideration of url to consist secrets, the workaround was to hardcode the url for the GitHub Pages, so it appears just below the job name and it is easily accesible for everyone.
     -   **TO DO:** If the job is implemented, the URL should be updated.
+
+## GitLab CI - CD
+
+The framework includes GitLab pipeline for CI/CD (you can find the repository with implemented GitLab CI/CD [here](https://gitlab.com/idavidov13/playwright-framework)):
+
+### Workflow Details
+
+-   **Environment Variables**: The Pipeline use environment variables defined in GitLab Setting > CI/CD > Variables.
+-   **Test Stages**: The Pipeline includes stages for setup and smoke test, and testing stage (sanity tests, API tests, and regression tests)
+-   **Reports**: All test reports are uploaded as artifacts for review.
+-   **Merge Report**: All uploaded reports are merged in one, and merged report is uploaded as artifact.
+-   **Deploy Report**: Uploaded merged report is deployed in GitLab Pages for the workflow.
+    -   **Note:** The report is public and can be accessed on [link](https://idavidov13.gitlab.io/playwright-framework). The configuration can be set from Deploy > Pages.
 
 ## Coding Standards
 
@@ -239,3 +253,5 @@ The framework includes four GitHub Actions workflows for CI/CD:
         return a + b;
     }
     ```
+
+7. **Test Tags**: Each test must have at least one tag. The default tags, which are used are: [@Smoke, @Sanity, @Api, @Regression]
