@@ -41,12 +41,10 @@ export async function apiRequest({
         options.headers = {
             Authorization: `Token ${headers}`,
             'Content-Type': 'application/json',
-            tenantid: process.env.TENANT_ID!,
         };
     } else {
         options.headers = {
             'Content-Type': 'application/json',
-            tenantid: process.env.TENANT_ID!,
         };
     }
 
